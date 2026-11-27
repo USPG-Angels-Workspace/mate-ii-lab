@@ -1,61 +1,149 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 @import "katex/dist/katex.min.css";
 @import "mafs/core.css";
 
-@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant dark (&:is(.dark *));
 
+/* ─── Tema (convención shadcn) + colores propios de Entiende ─── */
 :root {
-  --bg: #f7f6f2;
-  --card: #ffffff;
-  --fg: #1c1b19;
-  --muted: #6b6860;
-  --line: #e3e0d8;
-  --accent: #2f6fe4;
-  --ok: #188a4a;
-  --bad: #c8382e;
-  --warn: #b7791f;
-  --curve: #2f6fe4;
-  --asym: #d9480f;
-  --axis: #8a877f;
+  --radius: 0.75rem;
+  --background: oklch(0.985 0.003 90);
+  --foreground: oklch(0.2 0.01 80);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.01 80);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.01 80);
+  --primary: oklch(0.55 0.2 262);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.96 0.005 90);
+  --secondary-foreground: oklch(0.25 0.01 80);
+  --muted: oklch(0.955 0.005 90);
+  --muted-foreground: oklch(0.5 0.01 80);
+  --accent: oklch(0.94 0.03 262);
+  --accent-foreground: oklch(0.3 0.08 262);
+  --destructive: oklch(0.577 0.21 27);
+  --border: oklch(0.91 0.006 90);
+  --input: oklch(0.91 0.006 90);
+  --ring: oklch(0.55 0.2 262);
+  --chart-1: oklch(0.55 0.2 262);
+  --chart-2: oklch(0.6 0.17 150);
+  --chart-3: oklch(0.7 0.15 70);
+  --chart-4: oklch(0.6 0.2 30);
+  --chart-5: oklch(0.5 0.1 300);
+  --sidebar: oklch(0.97 0.004 90);
+  --sidebar-foreground: oklch(0.2 0.01 80);
+  --sidebar-primary: oklch(0.55 0.2 262);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.93 0.02 262);
+  --sidebar-accent-foreground: oklch(0.25 0.08 262);
+  --sidebar-border: oklch(0.91 0.006 90);
+  --sidebar-ring: oklch(0.55 0.2 262);
+
+  --ok: oklch(0.55 0.15 150);
+  --bad: oklch(0.57 0.2 27);
+  --warn: oklch(0.65 0.15 70);
+  --curve: oklch(0.55 0.2 262);
+  --asym: oklch(0.62 0.19 40);
+  --axis: oklch(0.6 0.01 80);
 }
 
-[data-theme="dark"] {
-  --bg: #121212;
-  --card: #1c1c1e;
-  --fg: #ecebe8;
-  --muted: #a3a09a;
-  --line: #2f2f33;
-  --accent: #6d9cff;
-  --ok: #4cc27f;
-  --bad: #ff6b5e;
-  --warn: #e3a440;
-  --curve: #6d9cff;
-  --asym: #ff8a4c;
-  --axis: #77746e;
+.dark {
+  --background: oklch(0.16 0.005 270);
+  --foreground: oklch(0.95 0.005 90);
+  --card: oklch(0.2 0.006 270);
+  --card-foreground: oklch(0.95 0.005 90);
+  --popover: oklch(0.21 0.006 270);
+  --popover-foreground: oklch(0.95 0.005 90);
+  --primary: oklch(0.7 0.15 262);
+  --primary-foreground: oklch(0.16 0.02 262);
+  --secondary: oklch(0.26 0.006 270);
+  --secondary-foreground: oklch(0.95 0.005 90);
+  --muted: oklch(0.26 0.006 270);
+  --muted-foreground: oklch(0.7 0.01 90);
+  --accent: oklch(0.3 0.05 262);
+  --accent-foreground: oklch(0.92 0.03 262);
+  --destructive: oklch(0.68 0.19 22);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.7 0.15 262);
+  --sidebar: oklch(0.18 0.006 270);
+  --sidebar-foreground: oklch(0.95 0.005 90);
+  --sidebar-primary: oklch(0.7 0.15 262);
+  --sidebar-primary-foreground: oklch(0.16 0.02 262);
+  --sidebar-accent: oklch(0.27 0.03 262);
+  --sidebar-accent-foreground: oklch(0.95 0.005 90);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.7 0.15 262);
+
+  --ok: oklch(0.72 0.15 150);
+  --bad: oklch(0.7 0.18 25);
+  --warn: oklch(0.78 0.14 75);
+  --curve: oklch(0.72 0.14 262);
+  --asym: oklch(0.75 0.15 45);
+  --axis: oklch(0.55 0.01 90);
 }
 
 @theme inline {
-  --color-bg: var(--bg);
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-sans);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
   --color-card: var(--card);
-  --color-fg: var(--fg);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
-  --color-line: var(--line);
+  --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
   --color-ok: var(--ok);
   --color-bad: var(--bad);
   --color-warn: var(--warn);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
 }
 
-html {
-  background: var(--bg);
-  color: var(--fg);
-}
-
-body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  -webkit-tap-highlight-color: transparent;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
 .katex {
@@ -70,8 +158,8 @@ body {
 /* Mafs con los colores del tema */
 .MafsView {
   --mafs-bg: var(--card);
-  --mafs-fg: var(--fg);
-  --mafs-line-color: var(--line);
+  --mafs-fg: var(--foreground);
+  --mafs-line-color: var(--border);
   --mafs-origin-color: var(--axis);
   --mafs-blue: var(--curve);
   --mafs-orange: var(--asym);
@@ -83,23 +171,60 @@ math-field {
   font-size: 1.25rem;
   padding: 0.4rem 0.6rem;
   border-radius: 0.6rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--input);
   background: var(--card);
-  color: var(--fg);
-  --caret-color: var(--accent);
-  --selection-background-color: color-mix(in srgb, var(--accent) 25%, transparent);
+  color: var(--foreground);
+  --caret-color: var(--primary);
+  --selection-background-color: color-mix(in srgb, var(--primary) 25%, transparent);
 }
 math-field:focus-within {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--ring);
 }
 
 @media print {
-  nav,
-  .no-print {
+  .no-print,
+  [data-sidebar],
+  [data-slot="sidebar-gap"],
+  [data-slot="sidebar-container"] {
     display: none !important;
   }
   body {
     background: white;
     color: black;
   }
+}
+
+/* Sin flechas de scroll: el desborde horizontal de fórmulas no debe crear scroll vertical */
+.overflow-x-auto {
+  overflow-y: hidden;
+  scrollbar-width: thin;
+}
+.overflow-x-auto::-webkit-scrollbar {
+  height: 4px;
+}
+.overflow-x-auto::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Scrollbars discretas en toda la app: sin botones de flecha */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklch, var(--muted-foreground) 35%, transparent) transparent;
+}
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: color-mix(in oklch, var(--muted-foreground) 35%, transparent);
+}
+.katex-display,
+.katex {
+  overflow-y: hidden;
 }

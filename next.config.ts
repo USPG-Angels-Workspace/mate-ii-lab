@@ -17,8 +17,9 @@ const nextConfig: NextConfig = {
 
 const withMDX = createMDX({
   options: {
-    remarkPlugins: ["remark-math"],
-    rehypePlugins: [["rehype-katex", { strict: false, throwOnError: false }]],
+    remarkPlugins: ["remark-gfm", "remark-math"],
+    // \\frac → \\dfrac: fracciones legibles también dentro de un párrafo
+    rehypePlugins: [["rehype-katex", { strict: false, throwOnError: false, macros: { "\\frac": "\\dfrac" } }]],
   },
 });
 
