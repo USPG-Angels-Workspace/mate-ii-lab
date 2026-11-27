@@ -1,0 +1,207 @@
+import type { Modulo, ModuloId } from "@/domain/types";
+
+export const MODULOS: Record<ModuloId, Modulo> = {
+  limites: {
+    id: "limites",
+    titulo: "Límites",
+    resumen: "A qué valor se ACERCA una función cuando x se acerca a un número, aunque en ese número la función no exista.",
+    subtemas: ["lim-directa", "lim-factorizar", "lim-racionalizar", "lim-h", "lim-laterales", "lim-infinito"],
+    generadores: ["lim-factorizar", "lim-racionalizar", "lim-h", "lim-laterales", "lim-infinito"],
+    predicciones: [
+      {
+        id: "p1",
+        subtema: "lim-factorizar",
+        pregunta: "La función $f(x)=\\frac{x^2-1}{x-1}$ **no existe** en $x=1$ (da $\\frac{0}{0}$). ¿Qué crees que pasa con $\\lim_{x\\to 1} f(x)$?",
+        opciones: ["No existe, porque f(1) no existe", "Vale 0", "Vale 2", "Es infinito"],
+        correcta: 2,
+        porQue:
+          "El límite **no** pregunta cuánto vale $f(1)$, sino a qué se **acerca** $f(x)$ cuando $x$ está cerca de 1. Como $\\frac{x^2-1}{x-1} = x+1$ (para $x\\ne 1$), los valores se acercan a $1+1=2$. La gráfica es una recta con un **hueco** en $(1,2)$. Mueve el punto en la visualización y mira la tabla.",
+      },
+      {
+        id: "p2",
+        subtema: "lim-laterales",
+        pregunta: "En $f(x)=\\frac{1}{x-2}$, ¿qué pasa cuando $x$ se acerca a 2 **por la izquierda** (1.9, 1.99, 1.999…)?",
+        opciones: ["Se acerca a 0", "Crece hacia +∞", "Baja hacia −∞", "Se acerca a 1/2"],
+        correcta: 2,
+        porQue: "Con $x=1.99$, el denominador es $-0.01$ (negativo y pequeñito): $\\frac{1}{-0.01}=-100$. Cuanto más cerca, más negativo. Por la derecha es lo contrario ($+\\infty$), así que el límite bilateral **no existe**.",
+      },
+      {
+        id: "p3",
+        subtema: "lim-infinito",
+        pregunta: "¿A qué se acerca $\\frac{3x^2+5}{x^2-4}$ cuando $x\\to\\infty$?",
+        opciones: ["∞, porque arriba crece", "0", "3", "−5/4"],
+        correcta: 2,
+        porQue: "Para $x$ enorme, el $+5$ y el $-4$ son insignificantes: queda $\\frac{3x^2}{x^2}=3$. Arriba y abajo crecen **al mismo ritmo**, por eso se estabiliza.",
+      },
+    ],
+    check: [
+      {
+        id: "c1",
+        subtema: "lim-factorizar",
+        pregunta: "Al sustituir obtuviste $\\frac{0}{0}$. ¿Qué significa?",
+        opciones: ["Que el límite es 0", "Que el límite no existe", "Que hay un factor común escondido: hay que simplificar", "Que el límite es 1"],
+        correcta: 2,
+        porQue: "$\\frac{0}{0}$ es una **indeterminación**: no dice el valor, avisa que numerador y denominador comparten un factor que se anula. Se factoriza o racionaliza, se cancela y se vuelve a evaluar.",
+      },
+      {
+        id: "c2",
+        subtema: "lim-factorizar",
+        pregunta: "¿Cuál cancelación es **válida**?",
+        opciones: ["$\\frac{x^2+3}{x^2} = 3$", "$\\frac{(x-2)(x+1)}{x-2} = x+1$", "$\\frac{x+5}{x} = 5$", "$\\frac{x^2-4}{x-4}=x-1$"],
+        correcta: 1,
+        porQue: "Solo se cancelan **factores** (cosas que multiplican a todo). En las otras se cancelan **términos** (cosas que suman), lo cual es incorrecto.",
+      },
+      {
+        id: "c3",
+        subtema: "lim-racionalizar",
+        pregunta: "¿Por qué se multiplica por el **conjugado** en $\\frac{\\sqrt{x+1}-2}{x-3}$?",
+        opciones: ["Para que el denominador quede positivo", "Porque $(\\sqrt{A}-2)(\\sqrt{A}+2)=A-4$ quita la raíz y deja ver el factor $(x-3)$", "Para elevar todo al cuadrado", "Porque así lo dice la regla"],
+        correcta: 1,
+        porQue: "Multiplicar arriba y abajo por lo mismo no cambia la fracción, y la diferencia de cuadrados elimina la raíz: aparece $x+1-4 = x-3$, que se cancela con el de abajo.",
+      },
+      {
+        id: "c4",
+        subtema: "lim-laterales",
+        pregunta: "Si $\\lim_{x\\to a^-} f = +\\infty$ y $\\lim_{x\\to a^+} f = -\\infty$, entonces $\\lim_{x\\to a} f$…",
+        opciones: ["es $+\\infty$", "es 0", "no existe", "es $-\\infty$"],
+        correcta: 2,
+        porQue: "El límite bilateral existe solo si los dos laterales coinciden.",
+      },
+      {
+        id: "c5",
+        subtema: "lim-directa",
+        pregunta: "$\\lim_{x\\to 2} (x^2+3x)$ se calcula…",
+        opciones: ["Factorizando", "Sustituyendo directamente: 10", "Racionalizando", "No existe"],
+        correcta: 1,
+        porQue: "Si al sustituir no hay división entre cero (ni raíz de negativo), el límite es el valor sustituido: $4+6=10$.",
+      },
+      {
+        id: "c6",
+        subtema: "lim-h",
+        pregunta: "En $\\lim_{h\\to0}\\frac{(3+h)^2-9}{h}$, ¿cuál es el primer paso correcto?",
+        opciones: ["$(3+h)^2 = 9+h^2$", "$(3+h)^2 = 9+6h+h^2$", "Sustituir y responder 0", "Cancelar las h"],
+        correcta: 1,
+        porQue: "$(a+b)^2=a^2+2ab+b^2$. Luego se cancela el 9, se saca $h$ de factor común y se cancela con el denominador: queda $6+h \\to 6$.",
+      },
+    ],
+    explicalo: [
+      {
+        pregunta: "Explica con tus palabras: ¿por qué se puede cancelar $(x-a)$ en un límite cuando $x\\to a$, si en $x=a$ ese factor vale 0?",
+        modelo:
+          "Porque el límite estudia valores de x **cercanos** a a, pero **distintos** de a. Para cualquier x ≠ a, el factor (x−a) no es cero, así que cancelarlo es legítimo. La función simplificada coincide con la original en todos esos puntos, entonces tienen el mismo límite.",
+      },
+      {
+        pregunta: "¿Por qué racionalizar elimina la indeterminación?",
+        modelo:
+          "Porque al multiplicar por el conjugado, la diferencia de cuadrados quita la raíz del numerador y aparece explícitamente el factor que se anulaba (el mismo que está abajo). Al cancelarlo, el denominador ya no se hace cero y se puede evaluar.",
+      },
+    ],
+  },
+  asintotas: {
+    id: "asintotas",
+    titulo: "Funciones racionales y asíntotas",
+    resumen: "Rectas a las que la gráfica se acerca sin tocarlas: verticales (división entre cero) y horizontales u oblicuas (comportamiento lejano).",
+    subtemas: ["asi-vertical", "asi-horizontal", "asi-oblicua"],
+    generadores: ["asintotas"],
+    predicciones: [
+      {
+        id: "p1",
+        subtema: "asi-vertical",
+        pregunta: "$f(x)=\\frac{(x-2)(x+1)}{(x-2)(x-3)}$. Al igualar el denominador a cero salen $x=2$ y $x=3$. ¿Cuántas asíntotas verticales tiene?",
+        opciones: ["Dos: x=2 y x=3", "Una: x=3", "Una: x=2", "Ninguna"],
+        correcta: 1,
+        porQue: "En $x=2$ el numerador **también** vale 0: el factor $(x-2)$ se cancela y queda un **hueco**, no asíntota. Solo $x=3$ es asíntota. Prueba en la visualización: pon $p=r$ y mira cómo la asíntota se convierte en un punto vacío.",
+      },
+      {
+        id: "p2",
+        subtema: "asi-horizontal",
+        pregunta: "¿Qué crees que pasa con $\\frac{2x+1}{x^2+1}$ cuando $x$ es muy grande (por ejemplo 1000)?",
+        opciones: ["Se va a infinito", "Se acerca a 2", "Se acerca a 0", "Se acerca a 1"],
+        correcta: 2,
+        porQue: "Abajo hay $x^2$ (un millón) y arriba $2x$ (dos mil): el denominador gana por mucho, así que la fracción tiende a 0. Asíntota horizontal $y=0$.",
+      },
+      {
+        id: "p3",
+        subtema: "asi-oblicua",
+        pregunta: "Si el numerador es de grado 2 y el denominador de grado 1, ¿cómo se ve la gráfica lejos del origen?",
+        opciones: ["Plana (horizontal)", "Pegada a una recta inclinada", "Como una parábola", "Oscila"],
+        correcta: 1,
+        porQue: "Al dividir, $f(x) = mx+b + \\frac{r}{x-c}$; la fracción se hace insignificante y queda la recta $y=mx+b$: la asíntota oblicua.",
+      },
+    ],
+    check: [
+      {
+        id: "c1",
+        subtema: "asi-vertical",
+        pregunta: "Para encontrar las asíntotas verticales…",
+        opciones: ["Igualas el numerador a cero", "Igualas el denominador a cero y verificas que el numerador NO sea cero ahí", "Comparas grados", "Divides los polinomios"],
+        correcta: 1,
+        porQue: "Si el numerador también se anula es $\\frac{0}{0}$ (hueco), no $\\frac{k}{0}$ (asíntota).",
+      },
+      {
+        id: "c2",
+        subtema: "asi-horizontal",
+        pregunta: "$f(x)=\\frac{4x^2-1}{2x^2+x}$. ¿Asíntota horizontal?",
+        opciones: ["$y=0$", "$y=2$", "$y=4$", "No tiene"],
+        correcta: 1,
+        porQue: "Grados iguales → cociente de coeficientes principales: $\\frac{4}{2}=2$.",
+      },
+      {
+        id: "c3",
+        subtema: "asi-oblicua",
+        pregunta: "¿Cuándo hay asíntota oblicua?",
+        opciones: ["Cuando los grados son iguales", "Cuando el grado de arriba es exactamente uno más que el de abajo", "Siempre que no haya vertical", "Cuando el de abajo es mayor"],
+        correcta: 1,
+        porQue: "Si el grado de arriba supera en uno, el cociente de la división es una recta $mx+b$. Y si hay horizontal, no hay oblicua.",
+      },
+      {
+        id: "c4",
+        subtema: "asi-horizontal",
+        pregunta: "Una función puede tener al mismo tiempo…",
+        opciones: ["Asíntota horizontal y oblicua", "Varias verticales y una horizontal", "Dos horizontales distintas (racional)", "Ninguna de las anteriores"],
+        correcta: 1,
+        porQue: "Puede haber varias verticales (una por cada cero del denominador que no anule el numerador), pero horizontal y oblicua se excluyen.",
+      },
+      {
+        id: "c5",
+        subtema: "asi-oblicua",
+        pregunta: "Al dividir $\\frac{x^2+2x}{x+1}$ obtienes cociente $x+1$ y residuo $-1$. La asíntota oblicua es…",
+        opciones: ["$y=x+1$", "$y=-1$", "$y=x+2$", "$x=-1$"],
+        correcta: 0,
+        porQue: "La asíntota es el **cociente**; el residuo forma la fracción que se va a 0.",
+      },
+    ],
+    explicalo: [
+      {
+        pregunta: "¿Cuál es la diferencia entre una asíntota vertical y un hueco?",
+        modelo:
+          "Ambos salen de un cero del denominador. Si el numerador NO se anula ahí, es k/0 y la función se dispara a ±∞: asíntota vertical. Si el numerador también se anula, es 0/0: hay un factor común que se cancela, la función se acerca a un número finito y solo falta ese punto: hueco.",
+      },
+      {
+        pregunta: "¿Por qué la asíntota oblicua es el cociente de la división?",
+        modelo:
+          "Porque f(x) = cociente + residuo/denominador. Cuando x es muy grande, residuo/denominador tiende a 0 (abajo tiene mayor grado), así que f(x) se parece cada vez más al cociente, que es una recta.",
+      },
+    ],
+  },
+  derivadas: {
+    id: "derivadas",
+    titulo: "Derivadas",
+    resumen: "La pendiente de la recta tangente: qué tan rápido cambia una función en un punto.",
+    subtemas: ["der-definicion", "der-reglas", "der-producto", "der-cociente", "der-cadena"],
+    generadores: [],
+    predicciones: [],
+    check: [],
+    explicalo: [],
+  },
+  repaso: {
+    id: "repaso",
+    titulo: "Repaso relámpago",
+    resumen: "Máximos y mínimos, recta y parábola, ángulos.",
+    subtemas: ["rep-maxmin", "rep-recta", "rep-parabola", "rep-angulos"],
+    generadores: [],
+    predicciones: [],
+    check: [],
+    explicalo: [],
+  },
+};

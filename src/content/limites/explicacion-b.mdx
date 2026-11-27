@@ -1,0 +1,31 @@
+## Otra forma de verlo: la foto borrosa
+
+Piensa en una foto donde **falta un píxel**. Aunque ese punto esté vacío, mirando los píxeles de alrededor sabes perfectamente de qué color debería ser. El límite es el **color que predicen los vecinos**; el valor de la función en el punto es el píxel (que puede faltar).
+
+| $x$ | 4.9 | 4.99 | 4.999 | **5** | 5.001 | 5.01 | 5.1 |
+|---|---|---|---|---|---|---|---|
+| $\frac{x^2-6x+5}{x-5}$ | 3.9 | 3.99 | 3.999 | **¿?** | 4.001 | 4.01 | 4.1 |
+
+Los vecinos dicen **4** por los dos lados. Ese es el límite, aunque en $x=5$ la fórmula da $\frac{0}{0}$.
+
+## ¿Y entonces para qué factorizar?
+
+La tabla **adivina** y el álgebra lo **demuestra**. Factorizar es encontrar una fórmula más sencilla que coincide con la original en todos los vecinos:
+$$\frac{(x-5)(x-1)}{x-5} = x-1 \quad (\text{si } x\neq 5)$$
+La nueva fórmula **sí** se puede evaluar en 5: $5-1=4$. Es la misma foto, pero sin el píxel roto.
+
+## Con raíces: el "truco del conjugado" en palabras
+
+$$\lim_{x\to 3}\frac{\sqrt{x+1}-2}{x-3}$$
+
+La raíz **esconde** el factor $(x-3)$. Para sacarlo, multiplica arriba y abajo por el **conjugado** $\sqrt{x+1}+2$ (multiplicar por $\frac{\text{algo}}{\text{algo}}$ es multiplicar por 1, así que la fracción no cambia):
+
+$$\frac{(\sqrt{x+1}-2)(\sqrt{x+1}+2)}{(x-3)(\sqrt{x+1}+2)} = \frac{(x+1)-4}{(x-3)(\sqrt{x+1}+2)} = \frac{x-3}{(x-3)(\sqrt{x+1}+2)}$$
+
+> Se lee: "raíz por raíz da lo de adentro; 2 por 2 da 4" (diferencia de cuadrados: $(a-b)(a+b)=a^2-b^2$).
+
+Cancelas $(x-3)$ y evalúas: $\frac{1}{\sqrt{4}+2}=\boxed{\frac{1}{4}}$.
+
+## Cuando sale $\frac{k}{0}$
+
+Dividir entre algo **cada vez más pequeño** da algo **cada vez más grande**: $\frac{1}{0.1}=10$, $\frac{1}{0.01}=100$. El **signo** del denominador cerca del punto decide si va a $+\infty$ o a $-\infty$. Si por la izquierda y por la derecha van a lugares distintos, el límite **no existe**.

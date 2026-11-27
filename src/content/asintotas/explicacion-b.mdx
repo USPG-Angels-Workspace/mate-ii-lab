@@ -1,0 +1,29 @@
+## Otra forma de verlo: ¿quién gana la carrera?
+
+Una fracción es una **carrera** entre el numerador y el denominador.
+
+**Lejos del origen** ($x$ enorme, por ejemplo $x=1000$), solo importan los términos de **mayor grado**, porque los demás son "migajas":
+
+| función | con $x=1000$ | ¿a qué se parece? | asíntota |
+|---|---|---|---|
+| $\frac{2x+1}{x^2+1}$ | $\frac{2001}{1000001}\approx 0.002$ | $\frac{2x}{x^2}=\frac{2}{x}\to 0$ | $y=0$ |
+| $\frac{3x^2-2}{x^2+5}$ | $\approx 2.99998$ | $\frac{3x^2}{x^2}=3$ | $y=3$ |
+| $\frac{x^2+2}{x-2}$ | $\approx 1002$ | $\frac{x^2}{x}=x$ (más algo) | oblicua |
+
+- Si abajo **gana** → la fracción se hace chiquita → $y=0$.
+- Si **empatan** → se cancelan las $x$ y queda el cociente de los números de adelante.
+- Si arriba gana **por uno** → queda algo como $x$: una **recta inclinada** (la oblicua, que se saca dividiendo).
+
+**Cerca de un cero del denominador**, la pregunta es otra: ¿arriba también se hace cero?
+
+- **No** ($\frac{k}{0}$): dividir entre casi cero → la gráfica sale disparada → **asíntota vertical**.
+- **Sí** ($\frac{0}{0}$): hay un factor repetido que se cancela; la gráfica es normal, solo le falta **un punto** → **hueco**.
+
+## Ejemplo rápido: $f(x)=\frac{x^2+2x}{x+1}$ (Laboratorio No. 1, ejercicio 7)
+
+- Abajo cero: $x=-1$. Arriba en $-1$: $1-2=-1\neq0$ → **A.V. $x=-1$**.
+- Grados 2 y 1 → arriba gana por uno → **no hay A.H.**, sí hay oblicua.
+- División sintética con $-1$: coeficientes $1,\ 2,\ 0$ → $1,\ 1\ |\ -1$. Cociente $x+1$, residuo $-1$.
+- **A.O. $y=x+1$**.
+
+> Truco de división sintética: si divides entre $(x-c)$, el número de afuera es $c$. Para $(x+1)$, $c=-1$.

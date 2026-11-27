@@ -1,0 +1,38 @@
+## ¿Qué es una asíntota?
+
+**Analogía:** una carretera con una **pared invisible** al lado. El carro (la gráfica) se acerca cada vez más a la pared, pero nunca la toca. Las asíntotas son esas paredes: **rectas** a las que la gráfica se pega.
+
+Una **función racional** es una división de polinomios: $f(x)=\frac{N(x)}{D(x)}$.
+
+## Las tres asíntotas (como en la presentación de la docente)
+
+**1. Vertical (A.V.): $x = k$.** **Iguala el denominador a cero** y resuelve. **Condición:** ese valor **no** debe anular también el numerador.
+> Se lee: "donde abajo da cero y arriba no, la función se dispara". Es $\frac{k}{0}$ → $\pm\infty$.
+
+**2. Horizontal (A.H.): $y = k$.** Se decide por **grados** (el exponente más alto):
+- arriba **menor** que abajo → $y=0$
+- **iguales** → $y=\frac{\text{coeficiente principal de arriba}}{\text{coeficiente principal de abajo}}$
+- arriba **mayor** → no hay A.H.
+
+**3. Oblicua (A.O.): $y = mx+b$.** Solo si el grado de arriba es **exactamente uno más** que el de abajo. Se obtiene **dividiendo** los polinomios: la asíntota es el **cociente** (sin el residuo). Si hay A.H., no hay A.O.
+
+## Ejemplo resuelto (Laboratorio No. 1, ejercicio 3)
+
+$$f(x)=\frac{x^2-4}{x-1}$$
+
+**A.V.** Igualo el denominador a cero: $x-1=0 \Rightarrow x=1$. Verifico el numerador: $1^2-4=-3\neq 0$. ✓ Entonces **$x=1$** es asíntota vertical.
+*Por qué verificar:* si arriba también diera 0, sería un hueco y no una asíntota.
+
+**A.H.** Grado de arriba 2, de abajo 1: arriba mayor → **no hay A.H.**
+
+**A.O.** Como $2 = 1+1$, divido $(x^2-4)\div(x-1)$:
+- $x^2 \div x = x$; $x(x-1)=x^2-x$; resto: $x-4$.
+- $x\div x = 1$; $1(x-1)=x-1$; resto: $-3$.
+
+Cociente $x+1$, residuo $-3$: $f(x) = x+1 + \frac{-3}{x-1}$. Como $\frac{-3}{x-1}\to 0$ lejos del origen, **$y=x+1$** es asíntota oblicua.
+
+**Graficar:** dibuja las asíntotas con otro color (punteadas), y luego la curva pegándose a ellas.
+
+## El error que más se repite
+
+Poner una asíntota vertical donde hay un **hueco**. Ejemplo: $\frac{(x-2)(x+1)}{(x-2)(x-3)}$: en $x=2$ arriba también da 0, así que **solo** $x=3$ es A.V.
