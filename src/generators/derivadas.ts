@@ -261,8 +261,8 @@ function genCadena(semilla: number, dif: Dificultad): Ejercicio {
   const uT = polyTex(u);
   const udT = polyTex(ud);
   const f = raiz ? `\\sqrt{${uT}}` : `${p(uT)}^{${n}}`;
-  const d = raiz ? frac(udT, `2\\sqrt{${uT}}`) : `${n}${p(uT)}^{${n - 1}}${p(udT)}`;
-  const sinInterna = raiz ? frac("1", `2\\sqrt{${uT}}`) : `${n}${p(uT)}^{${n - 1}}`;
+  const d = raiz ? frac(udT, `2\\sqrt{${uT}}`) : `${n}${p(uT)}${n - 1 === 1 ? "" : `^{${n - 1}}`}${p(udT)}`;
+  const sinInterna = raiz ? frac("1", `2\\sqrt{${uT}}`) : `${n}${p(uT)}${n - 1 === 1 ? "" : `^{${n - 1}}`}`;
   const sinBajar = `${n}${p(uT)}^{${n}}${p(udT)}`;
   const rango: [number, number] = raiz ? [-3, 3] : [-3, 3];
   const pasoU: Paso = {
