@@ -1,6 +1,7 @@
+import type { Metadata } from "next";
 import { Progreso } from "@/components/Progreso";
 
-export const metadata = { title: "Progreso · Mate II Lab" };
+export const metadata: Metadata = { title: "Progreso · Entiende" };
 
 export default function Page() {
   return <Progreso />;

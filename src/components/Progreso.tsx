@@ -1,4 +1,5 @@
 "use client";
+import { PartyPopper } from "lucide-react";
 import { MODULOS } from "@/content/modulos";
 import type { Subtema } from "@/domain/types";
 import { puntaje, useProgreso } from "@/store/progreso";
@@ -28,7 +29,7 @@ export const NOMBRE_SUBTEMA: Record<Subtema, string> = {
 };
 
 function color(p: number | null) {
-  if (p === null) return "bg-line/50 text-muted";
+  if (p === null) return "bg-muted text-muted-foreground";
   if (p >= 0.75) return "bg-ok/25";
   if (p >= 0.4) return "bg-warn/25";
   return "bg-bad/25";
@@ -37,7 +38,7 @@ function color(p: number | null) {
 export function Progreso() {
   const hidratado = useHidratado();
   const { dominio, fallos, quitarFallo, reiniciar } = useProgreso();
-  if (!hidratado) return <p className="text-muted">Cargando…</p>;
+  if (!hidratado) return <p className="text-muted-foreground">Cargando…</p>;
   return (
     <div className="space-y-4">
       <h1 className="text-2xl font-bold">Progreso del día</h1>
@@ -45,7 +46,7 @@ export function Progreso() {
         <h2 className="mb-3 text-lg font-semibold">Mapa de dominio</h2>
         {Object.values(MODULOS).map((m) => (
           <div key={m.id} className="mb-3">
-            <h3 className="mb-1 text-sm font-medium text-muted">{m.titulo}</h3>
+            <h3 className="mb-1 text-sm font-medium text-muted-foreground">{m.titulo}</h3>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
               {m.subtemas.map((s) => {
                 const d = dominio[s];
@@ -63,25 +64,25 @@ export function Progreso() {
       </Tarjeta>
       <Tarjeta>
         <h2 className="mb-1 text-lg font-semibold">Repasar antes de dormir</h2>
-        <p className="mb-3 text-sm text-muted">Lo que fallaste hoy. Léelo, entiende el porqué y quítalo de la lista.</p>
+        <p className="mb-3 text-sm text-muted-foreground">Lo que fallaste hoy. Léelo, entiende el porqué y quítalo de la lista.</p>
         {fallos.length === 0 ? (
-          <p className="text-muted">Nada pendiente. 🎉</p>
+          <p className="flex items-center gap-2 text-muted-foreground"><PartyPopper className="size-4" /> Nada pendiente.</p>
         ) : (
           <ul className="space-y-2">
             {fallos
               .map((f, i) => ({ f, i }))
               .reverse()
               .map(({ f, i }) => (
-                <li key={f.fecha + "-" + i} className="rounded-lg border border-line p-3 text-sm">
-                  <div className="mb-1 text-xs text-muted">{NOMBRE_SUBTEMA[f.subtema]}</div>
+                <li key={f.fecha + "-" + i} className="rounded-lg border border-border p-3 text-sm">
+                  <div className="mb-1 text-xs text-muted-foreground">{NOMBRE_SUBTEMA[f.subtema]}</div>
                   {f.tex && (
                     <div className="overflow-x-auto">
                       <Tex>{f.tex}</Tex>
                     </div>
                   )}
                   <MathText text={f.paso} className="block font-medium" />
-                  <MathText text={f.mensaje} className="block text-muted" />
-                  <button className="mt-1 text-xs text-accent underline" onClick={() => quitarFallo(i)}>
+                  <MathText text={f.mensaje} className="block text-muted-foreground" />
+                  <button className="mt-1 text-xs text-primary underline" onClick={() => quitarFallo(i)}>
                     Ya lo entendí
                   </button>
                 </li>

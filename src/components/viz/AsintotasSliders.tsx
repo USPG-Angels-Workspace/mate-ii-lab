@@ -10,7 +10,7 @@ function Slider({ label, value, set, min = -5, max = 5 }: { label: string; value
   return (
     <label className="flex items-center gap-2 text-sm">
       <span className="w-6 font-mono">{label}</span>
-      <input type="range" min={min} max={max} value={value} onChange={(e) => set(Number(e.target.value))} className="flex-1 accent-[var(--accent)]" />
+      <input type="range" min={min} max={max} value={value} onChange={(e) => set(Number(e.target.value))} className="flex-1 accent-[var(--primary)]" />
       <span className="w-6 text-right font-mono">{value}</span>
     </label>
   );
@@ -38,7 +38,7 @@ function ModoHueco() {
         alto={280}
         g={{ f: frac(polyTex(num), polyTex(den)), verticales: a.verticales, huecos, horizontal: esHueco ? null : a.horizontal, oblicua: esHueco ? null : a.oblicua }}
       />
-      <p className={`rounded-lg px-3 py-2 text-sm ${esHueco ? "bg-warn/10" : "bg-accent/10"}`}>
+      <p className={`rounded-lg px-3 py-2 text-sm ${esHueco ? "bg-warn/10" : "bg-primary/10"}`}>
         <MathText
           text={
             esHueco
@@ -47,7 +47,7 @@ function ModoHueco() {
           }
         />
       </p>
-      <p className="text-xs text-muted">Prueba: pon p igual a r y mira cómo desaparece la asíntota.</p>
+      <p className="text-xs text-muted-foreground">Prueba: pon p igual a r y mira cómo desaparece la asíntota.</p>
     </div>
   );
 }
@@ -76,10 +76,10 @@ function ModoGrados() {
         <Slider label="c" value={c} set={(v) => setC(v === 0 ? 1 : v)} min={-4} max={4} />
       </div>
       <GraficaRacional alto={280} g={{ f: frac(polyTex(num), "x^2-4"), verticales: a.verticales, huecos: [], horizontal: a.horizontal, oblicua: a.oblicua }} />
-      <p className="rounded-lg bg-accent/10 px-3 py-2 text-sm">
+      <p className="rounded-lg bg-primary/10 px-3 py-2 text-sm">
         <MathText text={`Grado arriba ${n}, abajo 2. ${caso}`} />
       </p>
-      <p className="text-xs text-muted">
+      <p className="text-xs text-muted-foreground">
         <MathText text="Las verticales $x=\pm2$ no cambian: dependen solo del denominador." />
       </p>
     </div>
@@ -97,7 +97,7 @@ export function AsintotasSliders() {
             ["grados", "Horizontal / oblicua (grados)"],
           ] as const
         ).map(([id, t]) => (
-          <button key={id} onClick={() => setModo(id)} className={`rounded-full border px-3 py-1 text-sm ${modo === id ? "border-accent bg-accent/15" : "border-line"}`}>
+          <button key={id} onClick={() => setModo(id)} className={`rounded-full border px-3 py-1 text-sm ${modo === id ? "border-primary bg-primary/15" : "border-border"}`}>
             {t}
           </button>
         ))}

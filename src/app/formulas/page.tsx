@@ -1,6 +1,7 @@
+import type { Metadata } from "next";
 import { HojaFormulas } from "@/components/HojaFormulas";
 
-export const metadata = { title: "Fórmulas · Mate II Lab" };
+export const metadata: Metadata = { title: "Fórmulas · Entiende" };
 
 export default function Page() {
   return <HojaFormulas />;

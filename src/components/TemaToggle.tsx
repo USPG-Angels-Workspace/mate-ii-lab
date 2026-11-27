@@ -1,26 +1,29 @@
 "use client";
+import { Moon, Sun } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-/** Alterna claro/oscuro. El tema inicial lo pone el script en <head> (sin parpadeo). */
+/** Alterna claro/oscuro (clase .dark de shadcn). El tema inicial lo pone el script en <head>. */
 export function TemaToggle() {
   return (
-    <button
+    <Button
+      variant="ghost"
+      size="icon"
       aria-label="Cambiar tema claro/oscuro"
-      className="rounded-lg px-2 py-1 text-lg hover:bg-line/50"
       onClick={() => {
         const html = document.documentElement;
-        const nuevo = html.dataset.theme === "dark" ? "light" : "dark";
-        html.dataset.theme = nuevo;
+        const oscuro = !html.classList.contains("dark");
+        html.classList.toggle("dark", oscuro);
         try {
-          localStorage.setItem("tema", nuevo);
+          localStorage.setItem("tema", oscuro ? "dark" : "light");
         } catch {
           /* sin almacenamiento */
         }
       }}
     >
-      <span className="dark:hidden">🌙</span>
-      <span className="hidden dark:inline">☀️</span>
-    </button>
+      <Sun className="hidden dark:block" />
+      <Moon className="dark:hidden" />
+    </Button>
   );
 }
 
-export const SCRIPT_TEMA = `(function(){try{var t=localStorage.getItem("tema");if(!t){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme="light"}})()`;
+export const SCRIPT_TEMA = `(function(){try{var t=localStorage.getItem("tema");if(!t){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.classList.toggle("dark",t==="dark")}catch(e){}})()`;

@@ -1,5 +1,10 @@
 "use client";
+import { CircleCheck } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useMemo, useState, type ReactNode } from "react";
 import { MODULOS } from "@/content/modulos";
 import type { Dificultad, ModuloId, PreguntaConcepto } from "@/domain/types";
@@ -12,6 +17,8 @@ import { Boton, Etiqueta, Tarjeta } from "./ui/basicos";
 import { MathText } from "./ui/Tex";
 import { AsintotasSliders } from "./viz/AsintotasSliders";
 import { LimiteAcercamiento } from "./viz/LimiteAcercamiento";
+import { CadenaViz, SecanteTangente } from "./viz/DerivadasViz";
+import { MaxMinViz, ParabolaViz } from "./viz/RepasoViz";
 import { useHidratado } from "./Hidratar";
 
 const NOMBRES: Record<Etapa, string> = {
@@ -26,6 +33,22 @@ const NOMBRES: Record<Etapa, string> = {
 const VIZ: Partial<Record<ModuloId, () => ReactNode>> = {
   limites: () => <LimiteAcercamiento />,
   asintotas: () => <AsintotasSliders />,
+  derivadas: () => (
+    <div className="space-y-6">
+      <SecanteTangente />
+      <hr className="border-border" />
+      <h3 className="font-semibold">Regla de la cadena: engranajes</h3>
+      <CadenaViz />
+    </div>
+  ),
+  repaso: () => (
+    <div className="space-y-6">
+      <MaxMinViz />
+      <hr className="border-border" />
+      <h3 className="font-semibold">Parábola: vértice, foco y directriz</h3>
+      <ParabolaViz />
+    </div>
+  ),
 };
 
 export function ModuloView({ id, explicacionA, explicacionB }: { id: ModuloId; explicacionA: ReactNode; explicacionB: ReactNode }) {
@@ -36,32 +59,42 @@ export function ModuloView({ id, explicacionA, explicacionB }: { id: ModuloId; e
   const completarEtapa = useProgreso((s) => s.completarEtapa);
   const etapa = st.etapa;
 
-  if (!hidratado) return <p className="text-muted">Cargando…</p>;
+  if (!hidratado) return <p className="text-muted-foreground">Cargando…</p>;
 
   return (
     <div className="space-y-4">
-      <header className="space-y-1">
-        <h1 className="text-2xl font-bold">{mod.titulo}</h1>
-        <p className="text-muted">{mod.resumen}</p>
-      </header>
+      <Card className="gap-3 bg-gradient-to-br from-primary/10 via-card to-card py-5">
+        <CardHeader>
+          <CardTitle className="text-2xl">{mod.titulo}</CardTitle>
+          <CardDescription>{mod.resumen}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-2">
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
+            <span>
+              Etapa {ETAPAS.indexOf(etapa) + 1} de {ETAPAS.length}: <strong className="text-foreground">{NOMBRES[etapa]}</strong>
+            </span>
+            <span>{st.completadas.length}/{ETAPAS.length} completadas</span>
+          </div>
+          <Progress value={(st.completadas.length / ETAPAS.length) * 100} />
+        </CardContent>
+      </Card>
 
-      <nav className="no-print -mx-1 flex gap-1 overflow-x-auto pb-1" aria-label="Etapas del módulo">
-        {ETAPAS.map((e, k) => (
-          <button
-            key={e}
-            onClick={() => irEtapa(id, e)}
-            className={`shrink-0 rounded-full border px-3 py-1 text-sm ${e === etapa ? "border-accent bg-accent text-white" : st.completadas.includes(e) ? "border-ok/50 bg-ok/10" : "border-line"}`}
-          >
-            {k + 1}. {NOMBRES[e]} {st.completadas.includes(e) && e !== etapa ? "✓" : ""}
-          </button>
-        ))}
-      </nav>
+      <Tabs value={etapa} onValueChange={(v) => irEtapa(id, v as Etapa)} className="no-print">
+        <TabsList className="grid h-auto w-full grid-cols-3 gap-1 p-1 sm:grid-cols-6">
+          {ETAPAS.map((e, k) => (
+            <TabsTrigger key={e} value={e} className="h-9 gap-1.5 px-2 text-xs sm:text-sm">
+              {st.completadas.includes(e) ? <CircleCheck className="size-3.5 text-ok" /> : <span className="text-xs opacity-60">{k + 1}</span>}
+              {NOMBRES[e]}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
 
       {etapa === "explicacion" && (
         <Tarjeta>
           {st.variante === "B" && (
             <p className="mb-3 rounded-lg bg-warn/10 px-3 py-2 text-sm">
-              {st.checkFallos > 0 ? "El check mostró dudas, así que aquí va **otra forma** de explicarlo, con otra analogía." : "Explicación alternativa."}
+              <MathText text={st.checkFallos > 0 ? "El check mostró dudas, así que aquí va **otra forma** de explicarlo, con otra analogía." : "Explicación alternativa."} />
             </p>
           )}
           <article className="max-w-none">{st.variante === "A" ? explicacionA : explicacionB}</article>
@@ -112,20 +145,20 @@ function Guiada({ id, onListo }: { id: ModuloId; onListo: () => void }) {
   return (
     <Tarjeta className="space-y-4">
       <div className="space-y-2">
-        <p className="text-sm text-muted">Tú escribes cada renglón; la app revisa que sea equivalente y que avances. Usa las pistas sin culpa.</p>
+        <p className="text-sm text-muted-foreground">Tú escribes cada renglón; la app revisa que sea equivalente y que avances. Usa las pistas sin culpa.</p>
         <div className="flex flex-wrap gap-2">
           {mod.generadores.map((t) => (
-            <button key={t} onClick={() => setTipo(t)} className={`rounded-full border px-3 py-1 text-sm ${t === tipo ? "border-accent bg-accent/15" : "border-line"}`}>
+            <Button key={t} size="sm" variant={t === tipo ? "default" : "outline"} className="rounded-full" onClick={() => setTipo(t)}>
               {generadorPorTipo(t)!.nombre}
-            </button>
+            </Button>
           ))}
         </div>
         <div className="flex items-center gap-2 text-sm">
           Dificultad:
           {([1, 2, 3] as Dificultad[]).map((d) => (
-            <button key={d} onClick={() => setDif(d)} className={`h-8 w-8 rounded-full border ${d === dif ? "border-accent bg-accent text-white" : "border-line"}`}>
+            <Button key={d} size="icon-sm" variant={d === dif ? "default" : "outline"} className="rounded-full" onClick={() => setDif(d)}>
               {d}
-            </button>
+            </Button>
           ))}
         </div>
       </div>
@@ -194,7 +227,7 @@ function Pregunta({ p, modo, onRespuesta }: { p: PreguntaConcepto; modo: "predic
               onRespuesta?.(k === p.correcta);
             }}
             className={`rounded-lg border px-3 py-2 text-left text-sm transition ${
-              sel === null ? "border-line hover:bg-line/40" : k === p.correcta ? "border-ok bg-ok/15" : k === sel ? "border-bad bg-bad/15" : "border-line opacity-60"
+              sel === null ? "border-border hover:bg-muted" : k === p.correcta ? "border-ok bg-ok/15" : k === sel ? "border-bad bg-bad/15" : "border-border opacity-60"
             }`}
           >
             <MathText text={o} />
@@ -278,7 +311,7 @@ function Explicalo({ id }: { id: ModuloId }) {
   return (
     <Tarjeta className="space-y-5">
       <h2 className="text-lg font-semibold">Explícalo tú</h2>
-      <p className="text-sm text-muted">Escribir la idea con tus palabras es la mejor prueba de que la entendiste. Luego compara con la respuesta modelo.</p>
+      <p className="text-sm text-muted-foreground">Escribir la idea con tus palabras es la mejor prueba de que la entendiste. Luego compara con la respuesta modelo.</p>
       {mod.explicalo.map((q, k) => (
         <div key={k} className="space-y-2">
           <MathText text={q.pregunta} className="block font-medium" />
@@ -286,11 +319,11 @@ function Explicalo({ id }: { id: ModuloId }) {
             value={txt[k] ?? ""}
             onChange={(e) => setTxt({ ...txt, [k]: e.target.value })}
             rows={3}
-            className="w-full rounded-lg border border-line bg-bg p-2 text-sm"
+            className="w-full rounded-lg border border-border bg-background p-2 text-sm"
             placeholder="Escribe tu explicación…"
           />
           {ver[k] ? (
-            <p className="rounded-lg bg-accent/10 px-3 py-2 text-sm">
+            <p className="rounded-lg bg-primary/10 px-3 py-2 text-sm">
               <strong>Respuesta modelo: </strong>
               <MathText text={q.modelo} />
             </p>

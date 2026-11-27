@@ -67,7 +67,7 @@ export function LimiteAcercamiento() {
               setCaso(c);
               setExp(0);
             }}
-            className={`rounded-full border px-3 py-1 text-sm ${c.id === caso.id ? "border-accent bg-accent/15" : "border-line"}`}
+            className={`rounded-full border px-3 py-1 text-sm ${c.id === caso.id ? "border-primary bg-primary/15" : "border-border"}`}
           >
             {c.nombre}
           </button>
@@ -88,12 +88,12 @@ export function LimiteAcercamiento() {
       </Mafs>
       <label className="block text-sm">
         Distancia a {caso.a}: <strong>{d}</strong> — arrastra hacia la derecha para acercarte
-        <input type="range" min={0} max={4} step={1} value={exp} onChange={(e) => setExp(Number(e.target.value))} className="mt-1 w-full accent-[var(--accent)]" />
+        <input type="range" min={0} max={4} step={1} value={exp} onChange={(e) => setExp(Number(e.target.value))} className="mt-1 w-full accent-[var(--primary)]" />
       </label>
       <div className="overflow-x-auto">
         <table className="w-full text-sm tabular-nums">
           <thead>
-            <tr className="text-muted">
+            <tr className="text-muted-foreground">
               <th className="px-2 py-1 text-left" style={{ color: "#d9480f" }}>
                 x (izquierda)
               </th>
@@ -108,7 +108,7 @@ export function LimiteAcercamiento() {
             {[0, 1, 2, 3, 4].map((k) => {
               const dd = Math.pow(10, -k);
               return (
-                <tr key={k} className={k === exp ? "bg-accent/10 font-semibold" : ""}>
+                <tr key={k} className={k === exp ? "bg-primary/10 font-semibold" : ""}>
                   <td className="px-2 py-1">{(caso.a - dd).toFixed(4)}</td>
                   <td className="px-2 py-1">{fmt(caso.f(caso.a - dd))}</td>
                   <td className="px-2 py-1">{(caso.a + dd).toFixed(4)}</td>

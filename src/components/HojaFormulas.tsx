@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { FORMULAS } from "@/data/formulas";
+import { Input } from "@/components/ui/input";
 import { Tex } from "./ui/Tex";
 
 const normal = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
@@ -13,12 +14,12 @@ export function HojaFormulas() {
   return (
     <div className="space-y-4">
       <h1 className="text-2xl font-bold">Hoja de fórmulas</h1>
-      <input
+      <Input
         type="search"
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Buscar: cociente, hueco, conjugado…"
-        className="w-full rounded-lg border border-line bg-card px-3 py-2"
+        className="h-11"
         aria-label="Buscar fórmula"
       />
       {temas.map((t) => (
@@ -27,11 +28,11 @@ export function HojaFormulas() {
           {lista
             .filter((f) => f.tema === t)
             .map((f) => (
-              <article key={f.id} className="rounded-xl border border-line bg-card p-3">
+              <article key={f.id} className="rounded-xl border border-border bg-card p-3">
                 <div className="flex items-center justify-between gap-2">
                   <h3 className="font-medium">{f.nombre}</h3>
                   {f.href !== "/formulas" && (
-                    <Link href={f.href} className="shrink-0 text-xs text-accent underline">
+                    <Link href={f.href} className="shrink-0 text-xs text-primary underline">
                       Practicar →
                     </Link>
                   )}
@@ -39,12 +40,12 @@ export function HojaFormulas() {
                 <div className="overflow-x-auto">
                   <Tex display>{f.tex}</Tex>
                 </div>
-                <p className="text-sm text-muted">{f.lectura}</p>
+                <p className="text-sm text-muted-foreground">{f.lectura}</p>
               </article>
             ))}
         </section>
       ))}
-      {lista.length === 0 && <p className="text-muted">Nada coincide con «{q}».</p>}
+      {lista.length === 0 && <p className="text-muted-foreground">Nada coincide con «{q}».</p>}
     </div>
   );
 }

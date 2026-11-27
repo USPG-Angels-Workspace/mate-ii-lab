@@ -46,7 +46,7 @@ export function GraficaRacional({ g, alto = 320 }: { g: Grafica; alto?: number }
           <Point key={`h${h.x}`} x={h.x} y={h.y} color="var(--card)" svgCircleProps={{ stroke: "var(--curve)", strokeWidth: 2, r: 6 }} />
         ))}
       </Mafs>
-      <figcaption className="flex flex-wrap gap-4 text-xs text-muted">
+      <figcaption className="flex flex-wrap gap-4 text-xs text-muted-foreground">
         <span>
           <span className="mr-1 inline-block h-0.5 w-5 align-middle" style={{ background: "var(--curve)" }} />
           función
