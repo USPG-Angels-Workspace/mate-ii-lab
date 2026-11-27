@@ -1,5 +1,6 @@
 "use client";
-import { Coordinates, Line, Mafs, Plot, Point } from "mafs";
+import { Coordinates, Line, Plot, Point } from "mafs";
+import { Lienzo } from "./Lienzo";
 import { useState } from "react";
 import { Tex } from "../ui/Tex";
 import { tramos } from "./GraficaRacional";
@@ -56,7 +57,7 @@ export function LimiteAcercamiento() {
   const d = Math.pow(10, -exp);
   const xi = caso.a - d;
   const xd = caso.a + d;
-  const clip = (y: number) => (Math.abs(y) > 50 ? NaN : y);
+  const clip = (y: number) => (Math.abs(y) > 500 ? NaN : y);
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap gap-2">
@@ -74,18 +75,18 @@ export function LimiteAcercamiento() {
         ))}
       </div>
       <Tex display>{`${caso.tex},\\quad x\\to ${caso.a}`}</Tex>
-      <Mafs height={260} viewBox={{ x: [caso.a - 4, caso.a + 4], y: [-6, 6] }} preserveAspectRatio={false}>
+      <Lienzo alto={260} x={[caso.a - 4, caso.a + 4]} y={[-6, 6]}>
         <Coordinates.Cartesian subdivisions={false} />
         {caso.verticales.map((v) => (
           <Line.ThroughPoints key={v} point1={[v, 0]} point2={[v, 1]} color="var(--asym)" style="dashed" />
         ))}
-        {tramos(caso.verticales, caso.a - 6, caso.a + 6).map(([a, b]) => (
+        {tramos(caso.verticales, caso.a - 40, caso.a + 40).map(([a, b]) => (
           <Plot.OfX key={a} y={(x) => clip(caso.f(x))} domain={[Math.max(a, caso.id === "raiz" ? -0.999 : a), b]} color="var(--curve)" weight={3} />
         ))}
         {caso.hueco && <Point x={caso.hueco[0]} y={caso.hueco[1]} color="var(--card)" svgCircleProps={{ stroke: "var(--curve)", strokeWidth: 2, r: 6 }} />}
         {Number.isFinite(clip(caso.f(xi))) && <Point x={xi} y={caso.f(xi)} color="#d9480f" />}
         {Number.isFinite(clip(caso.f(xd))) && <Point x={xd} y={caso.f(xd)} color="#188a4a" />}
-      </Mafs>
+      </Lienzo>
       <label className="block text-sm">
         Distancia a {caso.a}: <strong>{d}</strong> — arrastra hacia la derecha para acercarte
         <input type="range" min={0} max={4} step={1} value={exp} onChange={(e) => setExp(Number(e.target.value))} className="mt-1 w-full accent-[var(--primary)]" />

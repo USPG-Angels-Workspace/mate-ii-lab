@@ -1,11 +1,12 @@
 "use client";
-import { Coordinates, Line, Mafs, Plot, Point } from "mafs";
+import { Coordinates, Line, Plot, Point } from "mafs";
+import { Lienzo } from "./Lienzo";
 import { useMemo } from "react";
 import type { Grafica } from "@/domain/types";
 import { evaluate, parseTex } from "@/lib/math/expr";
 
 /** Tramos del dominio separados por las asíntotas verticales (para no unir ramas). */
-export function tramos(verticales: number[], lo = -12, hi = 12, eps = 0.02): [number, number][] {
+export function tramos(verticales: number[], lo = -80, hi = 80, eps = 0.02): [number, number][] {
   const cortes = [...verticales].sort((a, b) => a - b);
   const out: [number, number][] = [];
   let ini = lo;
@@ -23,14 +24,14 @@ export function GraficaRacional({ g, alto = 320 }: { g: Grafica; alto?: number }
     return (x: number) => {
       if (!p) return NaN;
       const y = evaluate(p.json, { x });
-      return Math.abs(y) > 60 ? NaN : y;
+      return Math.abs(y) > 500 ? NaN : y;
     };
   }, [g.f]);
   const verticales = g.verticales ?? [];
   const yMax = 10;
   return (
     <figure className="space-y-2">
-      <Mafs height={alto} viewBox={{ x: [-10, 10], y: [-yMax, yMax] }} preserveAspectRatio={false} pan zoom>
+      <Lienzo alto={alto} x={[-10, 10]} y={[-yMax, yMax]}>
         <Coordinates.Cartesian subdivisions={false} />
         {verticales.map((v) => (
           <Line.ThroughPoints key={`v${v}`} point1={[v, 0]} point2={[v, 1]} color="var(--asym)" style="dashed" />
@@ -45,7 +46,7 @@ export function GraficaRacional({ g, alto = 320 }: { g: Grafica; alto?: number }
         {(g.huecos ?? []).map((h) => (
           <Point key={`h${h.x}`} x={h.x} y={h.y} color="var(--card)" svgCircleProps={{ stroke: "var(--curve)", strokeWidth: 2, r: 6 }} />
         ))}
-      </Mafs>
+      </Lienzo>
       <figcaption className="flex flex-wrap gap-4 text-xs text-muted-foreground">
         <span>
           <span className="mr-1 inline-block h-0.5 w-5 align-middle" style={{ background: "var(--curve)" }} />

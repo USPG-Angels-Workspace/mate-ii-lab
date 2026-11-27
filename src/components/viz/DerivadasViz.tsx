@@ -1,6 +1,7 @@
 "use client";
 import { Cog } from "lucide-react";
-import { Coordinates, Line, Mafs, Plot, Point } from "mafs";
+import { Coordinates, Line, Plot, Point } from "mafs";
+import { Lienzo } from "./Lienzo";
 import { useState } from "react";
 import { MathText, Tex } from "../ui/Tex";
 
@@ -25,14 +26,14 @@ export function SecanteTangente() {
           </button>
         ))}
       </div>
-      <Mafs height={280} viewBox={{ x: [-4, 4], y: [-4, 8] }} preserveAspectRatio={false}>
+      <Lienzo alto={280} x={[-4, 4]} y={[-4, 8]}>
         <Coordinates.Cartesian subdivisions={false} />
         <Plot.OfX y={fn.f} color="var(--curve)" weight={3} />
         <Line.ThroughPoints point1={[a, fn.f(a)]} point2={[a + h, fn.f(a + h)]} color="#d9480f" />
         {h < 0.05 && <Line.PointSlope point={[a, fn.f(a)]} slope={mt} color="#188a4a" style="dashed" />}
         <Point x={a} y={fn.f(a)} color="#188a4a" />
         <Point x={a + h} y={fn.f(a + h)} color="#d9480f" />
-      </Mafs>
+      </Lienzo>
       <label className="block text-sm">
         Punto a: <strong>{a}</strong>
         <input type="range" min={-2} max={2} step={0.5} value={a} onChange={(e) => setA(Number(e.target.value))} className="mt-1 w-full accent-[var(--primary)]" />

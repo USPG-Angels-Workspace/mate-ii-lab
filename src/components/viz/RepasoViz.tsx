@@ -1,5 +1,6 @@
 "use client";
-import { Coordinates, Line, Mafs, Plot, Point } from "mafs";
+import { Coordinates, Line, Plot, Point } from "mafs";
+import { Lienzo } from "./Lienzo";
 import { useState } from "react";
 import { MathText, Tex } from "../ui/Tex";
 
@@ -13,14 +14,14 @@ export function MaxMinViz() {
   return (
     <div className="space-y-3">
       <Tex display>{"f(x)=x^3-3x,\\qquad f'(x)=3x^2-3"}</Tex>
-      <Mafs height={260} viewBox={{ x: [-3, 3], y: [-4, 4] }} preserveAspectRatio={false}>
+      <Lienzo alto={260} x={[-3, 3]} y={[-4, 4]}>
         <Coordinates.Cartesian subdivisions={false} />
         <Plot.OfX y={f} color="var(--curve)" weight={3} />
         <Line.PointSlope point={[x, f(x)]} slope={m} color={Math.abs(m) < 0.05 ? "#188a4a" : "#d9480f"} style="dashed" />
         <Point x={x} y={f(x)} color="#d9480f" />
         <Point x={-1} y={2} color="#188a4a" opacity={0.5} />
         <Point x={1} y={-2} color="#188a4a" opacity={0.5} />
-      </Mafs>
+      </Lienzo>
       <label className="block text-sm">
         x = <strong>{x.toFixed(2)}</strong>
         <input type="range" min={-2.2} max={2.2} step={0.05} value={x} onChange={(e) => setX(Number(e.target.value))} className="mt-1 w-full accent-[var(--primary)]" />
@@ -42,14 +43,14 @@ export function ParabolaViz() {
   return (
     <div className="space-y-3">
       <Tex display>{`${h === 0 ? "x" : `(x${h > 0 ? `-${h}` : `+${-h}`})`}^2 = ${4 * p}${k === 0 ? "y" : `(y${k > 0 ? `-${k}` : `+${-k}`})`}`}</Tex>
-      <Mafs height={260} viewBox={{ x: [-6, 6], y: [-6, 6] }} preserveAspectRatio={false}>
+      <Lienzo alto={260} x={[-6, 6]} y={[-6, 6]}>
         <Coordinates.Cartesian subdivisions={false} />
         <Plot.OfX y={f} color="var(--curve)" weight={3} />
         <Line.ThroughPoints point1={[0, k - p]} point2={[1, k - p]} color="var(--asym)" style="dashed" />
         <Point x={h} y={k} color="var(--curve)" />
         <Point x={h} y={k + p} color="#188a4a" />
         <Line.Segment point1={[h - 2 * Math.abs(p), k + p]} point2={[h + 2 * Math.abs(p), k + p]} color="#188a4a" />
-      </Mafs>
+      </Lienzo>
       <div className="grid gap-1 text-sm sm:grid-cols-3">
         {(
           [
