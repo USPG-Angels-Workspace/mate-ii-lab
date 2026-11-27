@@ -24,8 +24,8 @@ Next.js 16 (App Router) · TypeScript estricto · Tailwind v4 · shadcn/ui (Side
 ## Desarrollo
 
 ```bash
-npm install
-npm run dev        # http://localhost:3000
-npm test           # generadores, motor y derivadas por diferencias finitas
-npm run build
+pnpm install
+pnpm dev           # http://localhost:3000
+pnpm test          # generadores, motor y derivadas por diferencias finitas
+pnpm build
 ```
