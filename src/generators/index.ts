@@ -1,0 +1,13 @@
+import type { Dificultad, Ejercicio, Generador } from "@/domain/types";
+import { generadoresAsintotas } from "./asintotas";
+import { generadoresLimites } from "./limites";
+
+export const GENERADORES: Generador[] = [...generadoresLimites, ...generadoresAsintotas];
+
+export const generadorPorTipo = (tipo: string) => GENERADORES.find((g) => g.tipo === tipo);
+
+export function generar(tipo: string, semilla: number, dif: Dificultad): Ejercicio {
+  const g = generadorPorTipo(tipo);
+  if (!g) throw new Error(`Generador desconocido: ${tipo}`);
+  return g.generar(semilla, dif);
+}
