@@ -87,6 +87,17 @@ export function verificarExpr(input: string, paso: PasoExpr): Resultado {
           estado: "sinAvanzar",
           mensaje: "Es equivalente, pero todavía no está factorizado. Escribe el numerador y/o denominador como producto de factores, por ejemplo $(x-5)(x-1)$.",
         };
+      if (f === "expandido" || f === "numeradorExpandido") {
+        const parte = f === "numeradorExpandido" && Array.isArray(p.raw) && p.raw[0] === "Divide" ? p.raw[1] : p.raw;
+        if (JSON.stringify(parte).includes('"Delimiter"'))
+          return {
+            estado: "sinAvanzar",
+            mensaje:
+              f === "expandido"
+                ? "Es correcto, pero falta **desarrollar** (quitar paréntesis) y **agrupar** términos semejantes."
+                : "Es correcto, pero falta **desarrollar el numerador** (sin paréntesis) y agrupar términos semejantes.",
+          };
+      }
       if (f === "sinRaizEnNumerador") {
         const num = Array.isArray(p.raw) && p.raw[0] === "Divide" ? p.raw[1] : p.raw;
         if (JSON.stringify(num).includes('"Sqrt"'))

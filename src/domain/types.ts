@@ -56,7 +56,7 @@ export interface PasoExpr extends PasoBase {
   /** Prefijo fijo que se muestra antes del input, ej. \lim_{x\to 5}. */
   prefijo?: string;
   /** Requisitos de forma (además de ser equivalente). */
-  forma?: ("producto" | "finitoEnA" | "sinRaizEnNumerador")[];
+  forma?: ("producto" | "finitoEnA" | "sinRaizEnNumerador" | "expandido" | "numeradorExpandido")[];
   /** Punto del límite (para no evaluar ahí y para el chequeo finitoEnA). */
   a?: number;
   /** Ceros a evitar al evaluar. */
@@ -107,6 +107,9 @@ export interface Ejercicio {
   pasos: Paso[];
   /** Resumen de la respuesta final (LaTeX/texto). */
   respuesta: string;
+  /** f(x) y f'(x) en LaTeX, para verificar derivadas numéricamente (tests). */
+  funcion?: string;
+  derivada?: string;
   /** Datos para graficar (opcional). */
   grafica?: Grafica;
 }
