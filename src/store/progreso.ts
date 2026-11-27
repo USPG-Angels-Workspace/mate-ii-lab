@@ -59,6 +59,14 @@ interface EstadoBloque {
   completado: boolean;
 }
 
+export interface ResultadoSimulacro {
+  fecha: number;
+  aciertos: number;
+  total: number;
+  minutos: number;
+  ejercicios: { tipo: string; subtema: Subtema; tex: string; correcto: boolean; saltado: boolean }[];
+}
+
 interface Store {
   comprimido: boolean;
   bloques: Record<string, EstadoBloque>;
@@ -78,9 +86,12 @@ interface Store {
   quitarFallo: (i: number) => void;
   nuevaSemilla: () => number;
   reiniciar: () => void;
+  simulacro: ResultadoSimulacro | null;
+  setSimulacro: (r: ResultadoSimulacro | null) => void;
 }
 
-const modDefault = (): EstadoModulo => ({ etapa: "explicacion", completadas: [], variante: "A", checkFallos: 0 });
+const MOD_DEFAULT: EstadoModulo = Object.freeze({ etapa: "explicacion", completadas: [], variante: "A", checkFallos: 0 }) as EstadoModulo;
+const modDefault = (): EstadoModulo => ({ ...MOD_DEFAULT, completadas: [] });
 
 export const useProgreso = create<Store>()(
   persist(
@@ -91,6 +102,7 @@ export const useProgreso = create<Store>()(
       dominio: {},
       fallos: [],
       semilla: 1,
+      simulacro: null,
       setComprimido: (v) => set({ comprimido: v }),
       iniciarBloque: (id) =>
         set((s) => {
@@ -152,13 +164,15 @@ export const useProgreso = create<Store>()(
         set({ semilla: v });
         return v;
       },
-      reiniciar: () => set({ bloques: {}, modulos: {}, dominio: {}, fallos: [] }),
+      reiniciar: () => set({ bloques: {}, modulos: {}, dominio: {}, fallos: [], simulacro: null }),
+      setSimulacro: (r) => set({ simulacro: r }),
     }),
     { name: "mate-ii-lab", storage: createJSONStorage(() => almacenSeguro), skipHydration: true },
   ),
 );
 
-export const estadoModulo = (s: Store, m: ModuloId): EstadoModulo => s.modulos[m] ?? modDefault();
+/** Selector estable: devuelve siempre la misma referencia por defecto (evita bucles de render). */
+export const estadoModulo = (s: Store, m: ModuloId): EstadoModulo => s.modulos[m] ?? MOD_DEFAULT;
 
 /** Puntaje de dominio 0..1 (las pistas y los errores restan). */
 export function puntaje(d?: Dominio): number | null {
