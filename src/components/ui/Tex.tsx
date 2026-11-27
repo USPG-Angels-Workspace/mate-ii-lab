@@ -25,7 +25,8 @@ export function MathText({ text, className }: { text: string; className?: string
     <span className={className}>
       {partes.map((p, i) => {
         if (p.startsWith("$$")) return <Tex key={i} display>{p.slice(2, -2)}</Tex>;
-        if (p.startsWith("$") && p.length > 1) return <Tex key={i}>{p.slice(1, -1)}</Tex>;
+        // \\displaystyle: fracciones y límites a tamaño completo dentro del texto
+        if (p.startsWith("$") && p.length > 1) return <Tex key={i}>{`\\displaystyle ${p.slice(1, -1)}`}</Tex>;
         return (
           <Fragment key={i}>
             {p.split(/(\*\*[^*]+\*\*)/g).map((q, j) =>

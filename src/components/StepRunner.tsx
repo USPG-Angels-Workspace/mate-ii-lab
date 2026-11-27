@@ -1,4 +1,5 @@
 "use client";
+import { Check, CircleCheck, CircleDot, CircleHelp, CircleX, Lightbulb, TriangleAlert, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import type { Ejercicio, Paso } from "@/domain/types";
@@ -87,26 +88,26 @@ export function StepRunner({ ejercicio, modo, onTerminar }: { ejercicio: Ejercic
   return (
     <div className="space-y-4">
       <div className="space-y-1">
-        <p className="text-sm text-muted">
+        <p className="text-sm text-muted-foreground">
           <MathText text={ejercicio.enunciado} />
         </p>
-        <div className="overflow-x-auto rounded-lg bg-bg px-3 py-2 text-lg">
+        <div className="overflow-x-auto rounded-lg bg-background px-3 py-2 text-lg">
           <Tex display>{ejercicio.tex}</Tex>
         </div>
       </div>
 
       {/* Renglones ya resueltos, como en el cuaderno */}
       {hechos.length > 0 && (
-        <ol className="space-y-2 border-l-2 border-line pl-3">
+        <ol className="space-y-2 border-l-2 border-border pl-3">
           {hechos.map((h, k) => (
             <li key={k} className="text-sm">
-              <div className="flex items-center gap-2 text-muted">
+              <div className="flex items-center gap-2 text-muted-foreground">
                 <span>{k + 1}.</span>
                 <MathText text={h.paso.instruccion.split(".")[0].replace(/\*\*/g, "")} />
-                {h.revelado ? <Etiqueta tono="warn">revelado</Etiqueta> : <Etiqueta tono="ok">✓</Etiqueta>}
+                {h.revelado ? <Etiqueta tono="warn">revelado</Etiqueta> : <Etiqueta tono="ok"><Check className="size-3" /></Etiqueta>}
               </div>
               <div className="overflow-x-auto">
-                <Tex display>{renglon(h.paso, h.respuesta)}</Tex>
+                <Renglon tex={renglon(h.paso, h.respuesta)} />
               </div>
             </li>
           ))}
@@ -115,7 +116,7 @@ export function StepRunner({ ejercicio, modo, onTerminar }: { ejercicio: Ejercic
 
       <AnimatePresence mode="wait">
         {!terminado ? (
-          <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="space-y-3 rounded-xl border border-accent/40 bg-accent/5 p-3">
+          <motion.div key={i} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="space-y-3 rounded-xl border border-primary/40 bg-primary/5 p-3">
             <div className="flex items-start gap-2">
               <Etiqueta tono="accent">
                 Paso {i + 1}/{ejercicio.pasos.length}
@@ -126,7 +127,7 @@ export function StepRunner({ ejercicio, modo, onTerminar }: { ejercicio: Ejercic
             <EntradaPaso paso={paso} input={input} setInput={setInput} rectas={rectas} setRectas={setRectas} comprobar={comprobar} />
 
             {fb && <Feedback r={fb} />}
-            {fb?.estado === "correcto" && <MathText text={`**¿Por qué?** ${paso.porQue}`} className="block text-sm text-muted" />}
+            {fb?.estado === "correcto" && <MathText text={`**¿Por qué?** ${paso.porQue}`} className="block text-sm text-muted-foreground" />}
 
             <div className="flex flex-wrap gap-2">
               {paso.tipo !== "opcion" && (
@@ -136,7 +137,7 @@ export function StepRunner({ ejercicio, modo, onTerminar }: { ejercicio: Ejercic
               )}
               {conPistas && pista < 3 && (
                 <Boton variante="secundario" onClick={pedirPista}>
-                  {["💡 Pista", "💡 Método", "💡 Casi resuelto"][pista]}
+                  <Lightbulb /> {["Pista", "Método", "Casi resuelto"][pista]}
                 </Boton>
               )}
               {puedeRevelar && (
@@ -156,7 +157,7 @@ export function StepRunner({ ejercicio, modo, onTerminar }: { ejercicio: Ejercic
               <div className="rounded-lg border border-warn/50 bg-warn/10 p-3 text-sm">
                 <p className="mb-1 font-medium">¿Problemas con el teclado? Autoevalúate:</p>
                 <p>Este es el renglón modelo. ¿Lo hiciste igual en tu cuaderno?</p>
-                <Tex display>{renglon(paso)}</Tex>
+                <Renglon tex={renglon(paso)} />
                 <div className="mt-2 flex gap-2">
                   <Boton variante="ok" onClick={() => avanzar(false)}>
                     Sí, igual
@@ -192,6 +193,12 @@ export function StepRunner({ ejercicio, modo, onTerminar }: { ejercicio: Ejercic
   );
 }
 
+/** Un renglón puede ser LaTeX puro o texto con $LaTeX$ (los pasos de decisión). */
+function Renglon({ tex }: { tex: string }) {
+  if (tex.includes("$")) return <MathText text={tex} className="block py-1 text-sm" />;
+  return <Tex display>{tex}</Tex>;
+}
+
 function renglon(p: Paso, respuesta?: string): string {
   if (p.tipo === "expr") return `${p.prefijo ?? ""} ${p.modelo}`;
   if (p.tipo === "valor") return `${p.prefijo ?? ""} \\boxed{${p.esperado === "inf" ? "+\\infty" : p.esperado === "-inf" ? "-\\infty" : p.esperado === "noexiste" ? "\\text{no existe}" : p.esperado}}`;
@@ -208,9 +215,11 @@ function Feedback({ r }: { r: Resultado }) {
     errorTipico: "border-bad/50 bg-bad/10",
     incorrecto: "border-bad/50 bg-bad/10",
   }[r.estado];
-  const titulo = { correcto: "✓ ", noEntendi: "", sinAvanzar: "Casi: ", errorTipico: "Error típico: ", incorrecto: "✗ " }[r.estado];
+  const titulo = { correcto: "", noEntendi: "", sinAvanzar: "Casi: ", errorTipico: "Error típico: ", incorrecto: "" }[r.estado];
+  const Icono = { correcto: CircleCheck, noEntendi: CircleHelp, sinAvanzar: CircleDot, errorTipico: TriangleAlert, incorrecto: CircleX }[r.estado];
   return (
     <div role="status" className={`rounded-lg border px-3 py-2 text-sm ${estilo}`}>
+      <Icono className="mr-1.5 inline size-4 align-[-3px]" />
       <strong>{titulo}</strong>
       <MathText text={r.mensaje} />
     </div>
@@ -256,7 +265,7 @@ function EntradaPaso({
             />
             {rectas.length > 1 && (
               <Boton variante="fantasma" aria-label="Quitar" onClick={() => setRectas(rectas.filter((_, j) => j !== k))}>
-                ✕
+                <X />
               </Boton>
             )}
           </div>

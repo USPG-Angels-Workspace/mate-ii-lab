@@ -54,9 +54,10 @@ export function MathInput({
           cb.current.onEnter?.();
         }
       });
+      if (autoFocus) el.addEventListener("mount", () => el.focus(), { once: true });
       host.current.replaceChildren(el);
       mf.current = el;
-      if (autoFocus) setTimeout(() => el.focus(), 50);
+      if (autoFocus) setTimeout(() => el.focus(), 300);
     });
     return () => {
       vivo = false;

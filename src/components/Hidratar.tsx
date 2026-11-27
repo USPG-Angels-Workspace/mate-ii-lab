@@ -4,7 +4,8 @@ import { useProgreso } from "@/store/progreso";
 
 /** Carga el progreso guardado (localStorage) solo en el cliente, para evitar desajustes con el HTML del servidor. */
 export function useHidratado() {
-  const [h, setH] = useState(() => useProgreso.persist.hasHydrated());
+  // siempre false en el primer render (igual que en el servidor); se activa tras montar
+  const [h, setH] = useState(false);
   useEffect(() => {
     const unsub = useProgreso.persist.onFinishHydration(() => {
       // primera visita: semilla aleatoria para que los ejercicios varíen
