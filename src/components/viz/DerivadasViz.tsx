@@ -1,6 +1,6 @@
 "use client";
 import { Cog } from "lucide-react";
-import { Coordinates, Line, Plot, Point } from "mafs";
+import { Line, Plot, Point } from "mafs";
 import { Lienzo } from "./Lienzo";
 import { useState } from "react";
 import { MathText, Tex } from "../ui/Tex";
@@ -27,7 +27,6 @@ export function SecanteTangente() {
         ))}
       </div>
       <Lienzo alto={280} x={[-4, 4]} y={[-4, 8]}>
-        <Coordinates.Cartesian subdivisions={false} />
         <Plot.OfX y={fn.f} color="var(--curve)" weight={3} />
         <Line.ThroughPoints point1={[a, fn.f(a)]} point2={[a + h, fn.f(a + h)]} color="#d9480f" />
         {h < 0.05 && <Line.PointSlope point={[a, fn.f(a)]} slope={mt} color="#188a4a" style="dashed" />}

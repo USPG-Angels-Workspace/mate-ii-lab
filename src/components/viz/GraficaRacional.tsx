@@ -1,5 +1,5 @@
 "use client";
-import { Coordinates, Line, Plot, Point } from "mafs";
+import { Line, Plot, Point } from "mafs";
 import { Lienzo } from "./Lienzo";
 import { useMemo } from "react";
 import type { Grafica } from "@/domain/types";
@@ -32,7 +32,6 @@ export function GraficaRacional({ g, alto = 320 }: { g: Grafica; alto?: number }
   return (
     <figure className="space-y-2">
       <Lienzo alto={alto} x={[-10, 10]} y={[-yMax, yMax]}>
-        <Coordinates.Cartesian subdivisions={false} />
         {verticales.map((v) => (
           <Line.ThroughPoints key={`v${v}`} point1={[v, 0]} point2={[v, 1]} color="var(--asym)" style="dashed" />
         ))}

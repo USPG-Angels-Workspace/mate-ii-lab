@@ -1,5 +1,5 @@
 "use client";
-import { Coordinates, Line, Plot, Point } from "mafs";
+import { Line, Plot, Point } from "mafs";
 import { Lienzo } from "./Lienzo";
 import { useState } from "react";
 import { MathText, Tex } from "../ui/Tex";
@@ -15,7 +15,6 @@ export function MaxMinViz() {
     <div className="space-y-3">
       <Tex display>{"f(x)=x^3-3x,\\qquad f'(x)=3x^2-3"}</Tex>
       <Lienzo alto={260} x={[-3, 3]} y={[-4, 4]}>
-        <Coordinates.Cartesian subdivisions={false} />
         <Plot.OfX y={f} color="var(--curve)" weight={3} />
         <Line.PointSlope point={[x, f(x)]} slope={m} color={Math.abs(m) < 0.05 ? "#188a4a" : "#d9480f"} style="dashed" />
         <Point x={x} y={f(x)} color="#d9480f" />
@@ -44,7 +43,6 @@ export function ParabolaViz() {
     <div className="space-y-3">
       <Tex display>{`${h === 0 ? "x" : `(x${h > 0 ? `-${h}` : `+${-h}`})`}^2 = ${4 * p}${k === 0 ? "y" : `(y${k > 0 ? `-${k}` : `+${-k}`})`}`}</Tex>
       <Lienzo alto={260} x={[-6, 6]} y={[-6, 6]}>
-        <Coordinates.Cartesian subdivisions={false} />
         <Plot.OfX y={f} color="var(--curve)" weight={3} />
         <Line.ThroughPoints point1={[0, k - p]} point2={[1, k - p]} color="var(--asym)" style="dashed" />
         <Point x={h} y={k} color="var(--curve)" />

@@ -1,5 +1,5 @@
 "use client";
-import { Coordinates, Line, Plot, Point } from "mafs";
+import { Line, Plot, Point } from "mafs";
 import { Lienzo } from "./Lienzo";
 import { useState } from "react";
 import { Tex } from "../ui/Tex";
@@ -76,7 +76,6 @@ export function LimiteAcercamiento() {
       </div>
       <Tex display>{`${caso.tex},\\quad x\\to ${caso.a}`}</Tex>
       <Lienzo alto={260} x={[caso.a - 4, caso.a + 4]} y={[-6, 6]}>
-        <Coordinates.Cartesian subdivisions={false} />
         {caso.verticales.map((v) => (
           <Line.ThroughPoints key={v} point1={[v, 0]} point2={[v, 1]} color="var(--asym)" style="dashed" />
         ))}
