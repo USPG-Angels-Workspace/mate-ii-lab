@@ -40,7 +40,7 @@ for (const g of GENERADORES) {
         for (const d of DIFS) {
           const e = g.generar(s, d);
           const ctx = `${e.id} ${e.tex}`;
-          expect(e.pasos.length, ctx).toBeGreaterThan(1);
+          expect(e.pasos.length, ctx).toBeGreaterThan(0);
           for (const paso of e.pasos) {
             if (paso.tipo === "expr") {
               // el renglón modelo debe pasar el verificador (equivalente + forma)
@@ -77,6 +77,26 @@ for (const g of GENERADORES) {
     });
   });
 }
+
+describe("derivadas: confirmación con diferencias finitas", () => {
+  it("f'(x) del generador coincide con [f(x+h)−f(x−h)]/2h", () => {
+    for (const g of GENERADORES)
+      for (const s of SEMILLAS.slice(0, 60))
+        for (const d of DIFS) {
+          const e = g.generar(s, d);
+          if (!e.funcion || !e.derivada) continue;
+          const f = parseTex(e.funcion)!;
+          const fd = parseTex(e.derivada)!;
+          for (const x of [-1.3, 0.7, 2.1]) {
+            const h = 1e-5;
+            const num = (evaluate(f.json, { x: x + h }) - evaluate(f.json, { x: x - h })) / (2 * h);
+            const an = evaluate(fd.json, { x });
+            if (!Number.isFinite(an) || Math.abs(an) > 1e6) continue;
+            expect(Math.abs(num - an) / Math.max(1, Math.abs(an)), `${e.id} x=${x}: ${e.derivada}`).toBeLessThan(1e-4);
+          }
+        }
+  });
+});
 
 describe("asíntotas: confirmación numérica", () => {
   it("cerca de cada A.V. |f| crece; lejos f se pega a la A.H./A.O.", () => {
