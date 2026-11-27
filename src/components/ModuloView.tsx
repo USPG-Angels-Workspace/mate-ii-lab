@@ -21,6 +21,16 @@ import { CadenaViz, SecanteTangente } from "./viz/DerivadasViz";
 import { MaxMinViz, ParabolaViz } from "./viz/RepasoViz";
 import { useHidratado } from "./Hidratar";
 
+/** Etiquetas cortas para las pestañas (el nombre completo va en el encabezado). */
+const CORTO: Record<Etapa, string> = {
+  explicacion: "Explicación",
+  intuicion: "Intuición",
+  guiada: "Guiada",
+  sinPistas: "Sin pistas",
+  check: "Check",
+  explicalo: "Explícalo",
+};
+
 const NOMBRES: Record<Etapa, string> = {
   explicacion: "Explicación",
   intuicion: "Intuición",
@@ -82,9 +92,13 @@ export function ModuloView({ id, explicacionA, explicacionB }: { id: ModuloId; e
       <Tabs value={etapa} onValueChange={(v) => irEtapa(id, v as Etapa)} className="no-print">
         <TabsList className="grid h-auto w-full grid-cols-3 gap-1 p-1 sm:grid-cols-6">
           {ETAPAS.map((e, k) => (
-            <TabsTrigger key={e} value={e} className="h-9 gap-1.5 px-2 text-xs sm:text-sm">
-              {st.completadas.includes(e) ? <CircleCheck className="size-3.5 text-ok" /> : <span className="text-xs opacity-60">{k + 1}</span>}
-              {NOMBRES[e]}
+            <TabsTrigger
+              key={e}
+              value={e}
+              className="h-9 min-w-0 gap-1.5 px-2 text-xs sm:text-sm data-active:bg-primary data-active:text-primary-foreground dark:data-active:border-transparent dark:data-active:bg-primary dark:data-active:text-primary-foreground"
+            >
+              {st.completadas.includes(e) ? <CircleCheck className="size-3.5 shrink-0" /> : <span className="shrink-0 text-xs opacity-70">{k + 1}</span>}
+              <span className="truncate">{CORTO[e]}</span>
             </TabsTrigger>
           ))}
         </TabsList>
