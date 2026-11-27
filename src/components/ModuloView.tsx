@@ -293,7 +293,9 @@ function Check({ id }: { id: ModuloId }) {
         <div className={`rounded-lg p-3 ${fallos >= 2 ? "bg-warn/10" : "bg-ok/10"}`}>
           {fallos >= 2 ? (
             <>
-              <p className="mb-2">Fallaste {fallos} de 3. Te regreso a la explicación, pero **con otro enfoque** (otra analogía y otro ejemplo).</p>
+              <p className="mb-2">
+                Fallaste {fallos} de 3. Te regreso a la explicación, pero <strong>con otro enfoque</strong> (otra analogía y otro ejemplo).
+              </p>
               <Boton
                 onClick={() => {
                   setResp({});
