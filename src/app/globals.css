@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+@import "mafs/core.css";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  --bg: #f7f6f2;
+  --card: #ffffff;
+  --fg: #1c1b19;
+  --muted: #6b6860;
+  --line: #e3e0d8;
+  --accent: #2f6fe4;
+  --ok: #188a4a;
+  --bad: #c8382e;
+  --warn: #b7791f;
+  --curve: #2f6fe4;
+  --asym: #d9480f;
+  --axis: #8a877f;
+}
+
+[data-theme="dark"] {
+  --bg: #121212;
+  --card: #1c1c1e;
+  --fg: #ecebe8;
+  --muted: #a3a09a;
+  --line: #2f2f33;
+  --accent: #6d9cff;
+  --ok: #4cc27f;
+  --bad: #ff6b5e;
+  --warn: #e3a440;
+  --curve: #6d9cff;
+  --asym: #ff8a4c;
+  --axis: #77746e;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-card: var(--card);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-ok: var(--ok);
+  --color-bad: var(--bad);
+  --color-warn: var(--warn);
+}
+
+html {
+  background: var(--bg);
+  color: var(--fg);
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.katex {
+  font-size: 1.08em;
+}
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+
+/* Mafs con los colores del tema */
+.MafsView {
+  --mafs-bg: var(--card);
+  --mafs-fg: var(--fg);
+  --mafs-line-color: var(--line);
+  --mafs-origin-color: var(--axis);
+  --mafs-blue: var(--curve);
+  --mafs-orange: var(--asym);
+  border-radius: 0.75rem;
+}
+
+math-field {
+  width: 100%;
+  font-size: 1.25rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.6rem;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--fg);
+  --caret-color: var(--accent);
+  --selection-background-color: color-mix(in srgb, var(--accent) 25%, transparent);
+}
+math-field:focus-within {
+  outline: 2px solid var(--accent);
+}
+
+@media print {
+  nav,
+  .no-print {
+    display: none !important;
+  }
+  body {
+    background: white;
+    color: black;
+  }
+}
