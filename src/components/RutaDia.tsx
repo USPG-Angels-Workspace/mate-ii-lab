@@ -143,8 +143,8 @@ export function RutaDia() {
 
       {/* Siguiente paso, siempre visible */}
       {actual && (
-        <div className="no-print fixed inset-x-0 bottom-0 z-30 border-t border-border bg-background/95 p-3 backdrop-blur">
-          <div className="mx-auto flex max-w-3xl items-center justify-between gap-3">
+        <div className="no-print sticky bottom-3 z-30 mt-4 rounded-xl border border-border bg-background/95 p-3 shadow-lg backdrop-blur">
+          <div className="flex items-center justify-between gap-3">
             <div className="min-w-0 text-sm">
               <div className="text-muted-foreground">Siguiente paso</div>
               <div className="truncate font-semibold">{actual.titulo}</div>

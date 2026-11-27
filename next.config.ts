@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   pageExtensions: ["ts", "tsx", "mdx"],
+  // el indicador de desarrollo tapaba el pie de la barra lateral
+  devIndicators: { position: "bottom-right" },
   turbopack: {
     rules: {
       "*.css": {
