@@ -1,0 +1,39 @@
+## Otra forma de verlo: la lupa
+
+Haz zoom muchas veces sobre cualquier curva suave: llega un momento en que **parece una recta**. La pendiente de esa recta "de lupa" es la derivada en ese punto. Por eso la derivada responde: *si avanzo un poquito en $x$, ¿cuánto cambia $y$?*
+
+| $h$ | pendiente de la secante de $x^2$ en $x=3$: $\frac{(3+h)^2-9}{h}$ |
+|---|---|
+| 1 | 7 |
+| 0.1 | 6.1 |
+| 0.01 | 6.01 |
+| 0.001 | 6.001 |
+
+Los valores se acercan a **6**, y con la regla de la potencia: $(x^2)'=2x \Rightarrow 2(3)=6$. Coinciden.
+
+## ¿Por qué el producto NO es "derivada por derivada"?
+
+Imagina un rectángulo de lados $f$ y $g$ que **crecen los dos**. El área $f\cdot g$ aumenta por dos franjas:
+- la franja que agrega el lado $f$ al crecer: $f'\cdot g$
+- la franja que agrega el lado $g$ al crecer: $f\cdot g'$
+
+Total: $f'g+fg'$. (El cuadradito de la esquina $f'g'$ es tan pequeño que desaparece en el límite.)
+
+## Cociente con una frase
+
+> "**De arriba** por abajo, **menos** arriba por **de abajo**, todo **sobre abajo al cuadrado**."
+
+Ejemplo: $\left(\frac{x}{x+1}\right)' = \frac{(1)(x+1)-(x)(1)}{(x+1)^2} = \frac{1}{(x+1)^2}$.
+
+## Cadena: muñecas rusas
+
+$(x^2+1)^5$ es una muñeca dentro de otra: **afuera** "algo a la 5", **adentro** $x^2+1$.
+
+1. Deriva la de afuera dejando la de adentro **intacta**: $5(x^2+1)^4$.
+2. **Multiplica** por la derivada de adentro: $\cdot\,2x$.
+
+$$
+[(x^2+1)^5]' = 5(x^2+1)^4\cdot 2x = 10x(x^2+1)^4
+$$
+
+Si olvidas el paso 2, solo derivaste la muñeca de afuera.

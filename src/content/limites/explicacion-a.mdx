@@ -2,7 +2,9 @@
 
 **Analogía:** imagina que caminas hacia una puerta cerrada. Nunca la cruzas, pero puedes decir con certeza **a qué puerta te estás acercando**. El límite es eso: la "puerta" a la que se acercan los valores de $f(x)$ cuando $x$ se acerca a un número, **aunque nunca lleguemos a pararnos en él**.
 
-$$\lim_{x\to a} f(x) = L$$
+$$
+\lim_{x\to a} f(x) = L
+$$
 
 > Se lee: "el límite de $f$ de $x$, cuando $x$ tiende a $a$, es $L$". Significa: si tomo $x$ muy cerca de $a$ (pero distinto de $a$), $f(x)$ queda muy cerca de $L$.
 
@@ -18,17 +20,23 @@ $$\lim_{x\to a} f(x) = L$$
 
 ## Ejemplo resuelto (Laboratorio del 7 de noviembre, ejercicio 11)
 
-$$\lim_{x\to 5}\frac{x^2-6x+5}{x-5}$$
+$$
+\lim_{x\to 5}\frac{x^2-6x+5}{x-5}
+$$
 
 **Paso 1, sustituir.** Arriba: $25-30+5=0$. Abajo: $5-5=0$. Sale $\frac{0}{0}$.
 *Por qué importa:* no es la respuesta, es una **alarma**: $(x-5)$ está escondido arriba.
 
 **Paso 2, factorizar.** Busco dos números que **multiplicados** den $5$ y **sumados** den $-6$: son $-5$ y $-1$.
-$$\lim_{x\to 5}\frac{(x-5)(x-1)}{x-5}$$
+$$
+\lim_{x\to 5}\frac{(x-5)(x-1)}{x-5}
+$$
 *Por qué:* así la suma se convierte en **producto**, y solo los factores se pueden cancelar.
 
 **Paso 3, simplificar.** Cancelo $(x-5)$:
-$$\lim_{x\to 5}(x-1)$$
+$$
+\lim_{x\to 5}(x-1)
+$$
 *Por qué es válido:* en el límite $x\neq 5$, así que $(x-5)\neq 0$ y se puede dividir entre él.
 
 **Paso 4, evaluar.** $5-1 = \boxed{4}$.

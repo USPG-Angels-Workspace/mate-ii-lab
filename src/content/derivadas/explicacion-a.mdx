@@ -1,0 +1,48 @@
+## ¿Qué es la derivada?
+
+**Analogía:** el velocímetro de un carro. No te dice cuántos kilómetros llevas (eso es la función), sino **qué tan rápido** cambian *en este instante*. La derivada es el velocímetro de una función: su **razón de cambio instantánea**, que en la gráfica es la **pendiente de la recta tangente**.
+
+## De la secante a la tangente (la definición)
+
+Para una pendiente necesito dos puntos. Tomo $x$ y otro muy cerca, $x+h$:
+
+$$
+f'(x)=\lim_{h\to0}\frac{f(x+h)-f(x)}{h}
+$$
+
+> Se lee: "la derivada es el límite, cuando $h$ tiende a cero, de lo que cambia $f$ entre lo que cambia $x$". Es la pendiente de la secante cuando el segundo punto se pega al primero.
+
+¡Son los **límites con $h$** que ya practicaste! Siempre dan $\frac{0}{0}$, se desarrolla, se factoriza $h$, se cancela y se evalúa.
+
+## Las reglas (tabla de la docente)
+
+| Regla | Fórmula | En palabras |
+|---|---|---|
+| Constante | $(c)'=0$ | lo que no cambia, no tiene velocidad |
+| Potencia | $(x^n)'=nx^{n-1}$ | baja el exponente y réstale uno |
+| Suma/resta | $(f\pm g)'=f'\pm g'$ | término por término |
+| Producto | $(fg)'=f'g+fg'$ | deriva uno a la vez y suma |
+| Cociente | $\left(\frac{f}{g}\right)'=\frac{f'g-fg'}{g^2}$ | arriba-prima por abajo **menos** arriba por abajo-prima, sobre abajo² |
+| Cadena | $[f(g(x))]'=f'(g(x))\cdot g'(x)$ | afuera (con adentro igual) **por** la derivada de adentro |
+
+## Ejemplo resuelto (Ejercicio de repaso del 21/11)
+
+$f(x)=2x^2-3x+2$, $g(x)=-x^3+4x-1$. Calcular $[f(x)\cdot g(x)]'$.
+
+**Paso 1, derivar cada una.** $f'(x)=4x-3$, $g'(x)=-3x^2+4$.
+*Por qué:* la regla del producto necesita los cuatro ingredientes $f, f', g, g'$.
+
+**Paso 2, aplicar la regla.** $(4x-3)(-x^3+4x-1)+(2x^2-3x+2)(-3x^2+4)$.
+*Por qué:* en cada sumando se deriva **solo una** de las dos.
+
+**Paso 3, desarrollar y agrupar.**
+$(-4x^4+3x^3+16x^2-16x+3) + (-6x^4+9x^3+2x^2-12x+8)$
+$$
+\boxed{-10x^4+12x^3+18x^2-28x+11},\quad x\in\mathbb{R}
+$$
+
+## Los tres errores que más bajan nota
+
+- $(fg)'=f'g'$ es **incorrecto** (multiplicar las derivadas).
+- En el cociente, **invertir la resta** u **olvidar el $g^2$**.
+- En la cadena, **olvidar multiplicar por la derivada de adentro**.

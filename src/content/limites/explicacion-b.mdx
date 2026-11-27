@@ -11,16 +11,22 @@ Los vecinos dicen **4** por los dos lados. Ese es el límite, aunque en $x=5$ la
 ## ¿Y entonces para qué factorizar?
 
 La tabla **adivina** y el álgebra lo **demuestra**. Factorizar es encontrar una fórmula más sencilla que coincide con la original en todos los vecinos:
-$$\frac{(x-5)(x-1)}{x-5} = x-1 \quad (\text{si } x\neq 5)$$
+$$
+\frac{(x-5)(x-1)}{x-5} = x-1 \quad (\text{si } x\neq 5)
+$$
 La nueva fórmula **sí** se puede evaluar en 5: $5-1=4$. Es la misma foto, pero sin el píxel roto.
 
 ## Con raíces: el "truco del conjugado" en palabras
 
-$$\lim_{x\to 3}\frac{\sqrt{x+1}-2}{x-3}$$
+$$
+\lim_{x\to 3}\frac{\sqrt{x+1}-2}{x-3}
+$$
 
 La raíz **esconde** el factor $(x-3)$. Para sacarlo, multiplica arriba y abajo por el **conjugado** $\sqrt{x+1}+2$ (multiplicar por $\frac{\text{algo}}{\text{algo}}$ es multiplicar por 1, así que la fracción no cambia):
 
-$$\frac{(\sqrt{x+1}-2)(\sqrt{x+1}+2)}{(x-3)(\sqrt{x+1}+2)} = \frac{(x+1)-4}{(x-3)(\sqrt{x+1}+2)} = \frac{x-3}{(x-3)(\sqrt{x+1}+2)}$$
+$$
+\frac{(\sqrt{x+1}-2)(\sqrt{x+1}+2)}{(x-3)(\sqrt{x+1}+2)} = \frac{(x+1)-4}{(x-3)(\sqrt{x+1}+2)} = \frac{x-3}{(x-3)(\sqrt{x+1}+2)}
+$$
 
 > Se lee: "raíz por raíz da lo de adentro; 2 por 2 da 4" (diferencia de cuadrados: $(a-b)(a+b)=a^2-b^2$).
 
